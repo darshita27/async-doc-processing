@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Processing</title>
+</head>
+<body>
+
+<h2>Upload Document</h2>
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Upload</button>
+
+<hr>
+
+<h2>Documents Dashboard</h2>
+<button onclick="loadDocuments()">Refresh</button>
+
+<ul id="docList"></ul>
+
+<script>
+const API = "http://127.0.0.1:8000";
+
+// Upload file
+async function uploadFile() {
+    const file = document.getElementById("fileInput").files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    await fetch(API + "/upload/", {
+        method: "POST",
+        body: formData
+    });
+
+    alert("Uploaded!");
+    loadDocuments();
+}
+
+// Load all documents
+async function loadDocuments() {
+    const res = await fetch(API + "/documents/");
+    const data = await res.json();
+
+    const list = document.getElementById("docList");
+    list.innerHTML = "";
+
+    data.forEach(doc => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            ID: ${doc.id} | ${doc.name} | Status: ${doc.status}
+            <button onclick="processDoc(${doc.id})">Process</button>
+            <button onclick="viewDoc(${doc.id})">View</button>
+        `;
+
+        list.appendChild(li);
+    });
+}
+
+// Process document
+async function processDoc(id) {
+    await fetch(API + "/process/" + id, { method: "POST" });
+    alert("Processing started");
+}
+
+// View document
+async function viewDoc(id) {
+    const res = await fetch(API + "/documents/" + id);
+    const doc = await res.json();
+
+    alert(
+        "Name: " + doc.name +
+        "\nStatus: " + doc.status +
+        "\nResult: " + doc.result
+    );
+}
+
+// Load on start
+loadDocuments();
+</script>
+
+</body>
+</html>
