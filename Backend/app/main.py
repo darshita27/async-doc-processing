@@ -6,7 +6,7 @@ import os
 from app.db.database import engine, Base, SessionLocal
 from app.models.document import Document
 from app.schemas.document import DocumentCreate
-from worker.celery_app import process_document
+# from worker.celery_app import process_document
 
 app = FastAPI()
 
