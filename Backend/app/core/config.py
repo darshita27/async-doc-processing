@@ -1,2 +1,4 @@
-DATABASE_URL = "postgresql://postgres:6350061556@localhost:5432/doc_processing"
-REDIS_URL = "redis://localhost:6379"
+import os
+
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./test.db")
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
