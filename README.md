@@ -78,13 +78,6 @@ FastAPI handles incoming requests, Redis acts as a queue, and Celery processes t
 
 ---
 
-## Assumptions
-
-* Only text files are handled currently.
-* Files are stored locally in the uploads folder.
-* No user authentication is implemented.
-
----
 
 ## Trade-offs
 
@@ -94,14 +87,7 @@ FastAPI handles incoming requests, Redis acts as a queue, and Celery processes t
 
 ---
 
-## Limitations
 
-* No frontend interface.
-* No real-time progress tracking.
-* Limited file type support.
-* No retry or failure handling yet.
-
----
 
 ## Author
 
