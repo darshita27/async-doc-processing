@@ -113,13 +113,17 @@ async function uploadFile() {
     const formData = new FormData();
     formData.append("file", file);
 
-    await fetch(API + "/upload/", {
-        method: "POST",
-        body: formData
-    });
+    const res = await fetch(API + "/upload/", {
+    method: "POST",
+    body: formData
+});
 
-    alert("Uploaded!");
-    loadDocuments();
+if (!res.ok) {
+    alert("Upload failed!");
+    return;
+}
+
+alert("Uploaded!");
 }
 
 // Load all documents
